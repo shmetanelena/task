@@ -5,15 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Task 1</title>
-        <link rel="stylesheet" href="css/common.css" />
+        <link rel="stylesheet" href="common/common.css" />
     </head>
     <body>
-        <table id="users-table">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Balance</th>
-            </tr>
+        <table id="users-table" class="transaction-table js-transaction-table">
+            <head>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Balance</th>
+                </tr>
+            </head>
         </table>
         <script src="js/users.js" type="module"></script>
         <script src="js/task1-users-table.js" type="module"></script>
