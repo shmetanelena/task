@@ -11,21 +11,59 @@ const makeUserTableRowMarkup = ({ name, email, balance }, index) => {
     `;
 };
 
-console.log(users);
+//console.log(users);
 const tableEl = document.querySelector('#users-table');
 
 const makeUsersTableRows = users.map(makeUserTableRowMarkup).join('');
 
 tableEl.insertAdjacentHTML('beforeend', makeUsersTableRows);
 
-console.log(makeUsersTableRows);
+const select = document.createElement('select');
+users.forEach((user, index) => {
+    const option = document.createElement('option');
+    option.setAttribute('value', `user-${index}`);
+    option.textContent = user.name;
+    select.append(option);
+});
+select.addEventListener('change', event => {
+    tableEl
+        .querySelectorAll('td')
+        .forEach(td => (td.style.fontWeight = 'normal'));
 
-//let trEl = document.createElement('tr');
-// let tdEl = document.createElement('td');
-/*<select>
-    <option value="value1">Text1</option>
-    <option value="value2">Text2</option>
-    <option value="value3">Text3</option>
-</select>;
-*/
-//element<select>.value = value1...3
+    const id = event.currentTarget.value;
+    const trEl = document.querySelector('#' + id);
+    //console.log(trEl);
+    const rowEl = trEl.querySelectorAll('td');
+    // console.log(rowEl);
+    rowEl.forEach(td => (td.style.fontWeight = 'bold'));
+});
+
+document.body.append(select);
+
+const divEl = document.createElement('div');
+
+const ulEl = document.createElement('ul');
+ulEl.setAttribute('id', 'search-result');
+
+const inputEl = document.createElement('input');
+inputEl.setAttribute('id', 'search-text');
+inputEl.setAttribute('type', 'text');
+inputEl.setAttribute('placeholder', 'Enter the text');
+inputEl.addEventListener('input', event => {
+    ulEl.innerHTML = '';
+    const text = event.currentTarget.value.toUpperCase();
+    if (text != '') {
+        const html = users
+            .filter(
+                user =>
+                    user.name.toUpperCase().includes(text) ||
+                    user.email.toUpperCase().includes(text)
+            )
+            .map(user => `<li>${user.name} - ${user.email}</li>`)
+            .join('');
+        ulEl.innerHTML = html;
+    }
+});
+
+divEl.append(inputEl, ulEl);
+document.body.append(divEl);
