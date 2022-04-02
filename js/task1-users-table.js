@@ -1,4 +1,4 @@
-import users from './users.js';
+//import users from './users.js'; //если импортировать данние из файла ./users.js
 
 const makeUserTableRowMarkup = ({ name, email, balance }, index) => {
     return `
