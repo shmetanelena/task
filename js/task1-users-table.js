@@ -1,4 +1,4 @@
-//import users from './users.js'; //если импортировать данние из файла ./users.js
+//   !!!   import users from './users.js'; //если импортировать данние из файла ./users.js
 
 const makeUserTableRowMarkup = ({ name, email, balance }, index) => {
     return `
@@ -19,6 +19,8 @@ const makeUsersTableRows = users.map(makeUserTableRowMarkup).join('');
 tableEl.insertAdjacentHTML('beforeend', makeUsersTableRows);
 
 const select = document.createElement('select');
+select.classList.add('select-css');
+
 users.forEach((user, index) => {
     const option = document.createElement('option');
     option.setAttribute('value', `user-${index}`);
@@ -46,6 +48,7 @@ const ulEl = document.createElement('ul');
 ulEl.setAttribute('id', 'search-result');
 
 const inputEl = document.createElement('input');
+inputEl.classList.add('list-css');
 inputEl.setAttribute('id', 'search-text');
 inputEl.setAttribute('type', 'text');
 inputEl.setAttribute('placeholder', 'Enter the text');
@@ -67,3 +70,5 @@ inputEl.addEventListener('input', event => {
 
 divEl.append(inputEl, ulEl);
 document.body.append(divEl);
+
+//inputEl.classList.add('list-css');

@@ -4,6 +4,7 @@ const fields = [
     { id: 'eyeColor', title: 'Eyes' },
     { id: 'isActive', title: 'Active' },
     { id: 'gender', title: 'Gender' },
+    { id: 'balance', title: 'Balance' },
 ];
 
 let sortId;
@@ -15,6 +16,8 @@ const tableHeadTr = document.createElement('tr');
 fields.forEach(field => {
     const th = document.createElement('th');
     th.textContent = field.title;
+    th.setAttribute('id', field.id);
+    th.addEventListener('click', tableHeadClick);
     tableHeadTr.append(th);
 });
 tableHead.append(tableHeadTr);
@@ -36,3 +39,38 @@ function fillTable() {
         .join('');
 }
 fillTable();
+
+function tableHeadClick(event) {
+    const id = event.currentTarget.getAttribute('id');
+    if (id === sortId) {
+        isAscendingSort = !isAscendingSort;
+    } else {
+        sortId = id;
+        isAscendingSort = true;
+    }
+
+    users.sort((firstUser, secondUser) => {
+        const first = firstUser[sortId];
+        const second = secondUser[sortId];
+        switch (typeof first) {
+            case 'string':
+                return isAscendingSort
+                    ? first.localeCompare(second)
+                    : second.localeCompare(first);
+            case 'boolean':
+            case 'number':
+                return isAscendingSort ? first - second : second - first;
+            default:
+                return 0;
+        }
+    });
+    fillTable();
+
+    fields.forEach(field => {
+        const th = document.querySelector('#' + field.id);
+        th.textContent = field.title;
+        if (sortId === field.id) {
+            th.textContent += ` ${isAscendingSort ? '+' : '-'}`;
+        }
+    });
+}
