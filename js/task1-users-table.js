@@ -1,4 +1,19 @@
 //   !!!   import users from './users.js'; //если импортировать данние из файла ./users.js
+const addItemUser = users.map(user => {
+    const elem = document.createElement('p');
+    elem.textContent = `${user.name} balance: ${user.balance}`;
+    return elem;
+});
+const tableEl = document.querySelector('#users-table');
+tableEl.after(...addItemUser);
+
+const listName = users
+    .map(user => `<p> *** ${user.name}  =  ${user.email}</p>`)
+    .join('');
+
+//const tableEl = document.querySelector('#users-table');
+
+tableEl.insertAdjacentHTML('beforebegin', listName);
 
 const makeUserTableRowMarkup = ({ name, email, balance }, index) => {
     return `
@@ -11,9 +26,33 @@ const makeUserTableRowMarkup = ({ name, email, balance }, index) => {
     `;
 };
 
-//console.log(users);
-const tableEl = document.querySelector('#users-table');
+const createTd = text => {
+    document.createElement('td');
+    td.textContent = text;
+    return td;
+};
 
+const makeUsersTableRowsAsElements = (user, index) => {
+    const tr = document.createElement('tr');
+
+    const createTdAndAppend = text => {
+        document.createElement('td');
+        td.textContent = text;
+        tr.append(td);
+    };
+    createTdAndAppend(index);
+    createTdAndAppend(user.name);
+    createTdAndAppend(user.email);
+    createTdAndAppend(user.balance);
+
+    //tr.append(createTd(index), createTd(user.name), createTd(user.emai), createTd(user.balance));
+    //[index, user.name, user.email, user.balance].forEach(str => tr.append(createTd(str)));
+
+    return tr;
+};
+
+//const tableEl = document.querySelector('#users-table');
+//console.log(users);
 const makeUsersTableRows = users.map(makeUserTableRowMarkup).join('');
 
 tableEl.insertAdjacentHTML('beforeend', makeUsersTableRows);
